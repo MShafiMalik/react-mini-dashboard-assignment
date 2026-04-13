@@ -41,8 +41,6 @@ A single-page application that fulfills a front-end hiring assignment: an **API-
 | Forms        | React Hook Form, Zod, `@hookform/resolvers` |
 | Feedback     | Sonner (`Toaster` in `App.tsx`)             |
 
-For rationale and diagrams, see **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
-
 ---
 
 ## Architecture (overview)
@@ -98,8 +96,6 @@ src/
 
 High-level routing: **`/` → `/listing`**, routes **`/listing`** and **`/form`** nested under `AppShell`.
 
-Detailed system diagrams, sequence sketches, and UI guidelines live in **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
-
 ---
 
 ## Environment variables
@@ -125,21 +121,6 @@ npm run lint         # ESLint
 npm run format       # Prettier write
 npm run format:check # Prettier check
 ```
-
----
-
-## Implementation stages
-
-Step-by-step setup, optional commit messages, acceptance checks, and a manual QA list are maintained in **[IMPLEMENTATION-STAGES.md](./IMPLEMENTATION-STAGES.md)**. Use it to trace how the stack was introduced (ESLint → Prettier → Husky → Tailwind → shadcn → theme → routing/Redux → listing → form → notifications → polish).
-
----
-
-## Documentation index
-
-| Document                                               | Contents                                                                       |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| [ARCHITECTURE.md](./ARCHITECTURE.md)                   | Tech stack detail, mermaid diagrams, listing/form flows, UI and error strategy |
-| [IMPLEMENTATION-STAGES.md](./IMPLEMENTATION-STAGES.md) | Staged checklist, stack matrix, verification commands                          |
 
 ---
 
