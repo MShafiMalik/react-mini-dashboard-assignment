@@ -2,8 +2,8 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { AppShell } from '@/components/layout/AppShell'
 import { FormPage } from '@/pages/FormPage'
-import { ListingPage } from '@/pages/ListingPage'
 import { Toaster } from '@/components/ui/sonner'
+import { ListingPage } from './pages/ListingPage'
 
 function App() {
   return (

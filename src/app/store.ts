@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { listingApi } from '@/features/listing/listingApi'
-import demoReducer from '@/features/demo/demoSlice'
+import listingReducer from '@/features/listing/listingSlice'
 
 export const store = configureStore({
   reducer: {
-    demo: demoReducer,
+    listing: listingReducer,
     [listingApi.reducerPath]: listingApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(listingApi.middleware),
