@@ -10,6 +10,7 @@ import {
 
 export function ThemeToggle() {
   const { setTheme } = useTheme()
+  const itemClassName = 'focus:bg-primary/15 focus:text-foreground'
 
   return (
     <DropdownMenu>
@@ -19,15 +20,15 @@ export function ThemeToggle() {
         Theme
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem className={itemClassName} onClick={() => setTheme('light')}>
           <Sun className="mr-2 size-4" />
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem className={itemClassName} onClick={() => setTheme('dark')}>
           <Moon className="mr-2 size-4" />
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
+        <DropdownMenuItem className={itemClassName} onClick={() => setTheme('system')}>
           <Monitor className="mr-2 size-4" />
           System
         </DropdownMenuItem>

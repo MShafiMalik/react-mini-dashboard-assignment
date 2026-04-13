@@ -7,9 +7,9 @@ import { Toaster } from '@/components/ui/sonner'
 
 function App() {
   return (
-    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="space-y-6">
-        <Card>
+        <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
           <CardHeader>
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
@@ -28,6 +28,7 @@ function App() {
           <CardContent>
             <Button
               variant="default"
+              className="bg-primary px-5 text-primary-foreground hover:bg-primary/90"
               onClick={() =>
                 toast.success(
                   'Blueprint loaded. We can now refine design decisions section by section.'
@@ -40,7 +41,7 @@ function App() {
         </Card>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
+          <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
             <CardHeader>
               <CardTitle>Design System Tokens</CardTitle>
               <CardDescription>
@@ -69,7 +70,7 @@ function App() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
             <CardHeader>
               <CardTitle>App Shell</CardTitle>
               <CardDescription>
@@ -86,7 +87,7 @@ function App() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
+          <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
             <CardHeader>
               <CardTitle>Listing Page Blueprint</CardTitle>
               <CardDescription>Task 1 requirements mapped to UI sections.</CardDescription>
@@ -101,7 +102,7 @@ function App() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
             <CardHeader>
               <CardTitle>Form Page Blueprint</CardTitle>
               <CardDescription>Task 2 requirements mapped to validation UX.</CardDescription>
@@ -117,7 +118,7 @@ function App() {
           </Card>
         </div>
 
-        <Card>
+        <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
           <CardHeader>
             <CardTitle>Final Sign-Off Choices</CardTitle>
             <CardDescription>
