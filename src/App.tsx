@@ -1,14 +1,69 @@
 import { toast } from 'sonner'
 
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { reset, increment, decrement } from '@/features/demo/demoSlice'
+import { useGetTestProductsQuery } from '@/features/listing/listingApi'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toaster } from '@/components/ui/sonner'
 
 function App() {
+  const dispatch = useAppDispatch()
+  const counter = useAppSelector((state) => state.demo.counter)
+  const { data: testProducts = [], isLoading, isError, refetch } = useGetTestProductsQuery(3)
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="space-y-6">
+        <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
+          <CardHeader>
+            <CardTitle>Redux Toolkit + RTK Query Test</CardTitle>
+            <CardDescription>
+              Temporary panel to validate store state updates and API fetching.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-muted-foreground">Counter:</p>
+              <p className="font-semibold">{counter}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="secondary" onClick={() => dispatch(decrement())}>
+                Decrement
+              </Button>
+              <Button variant="default" onClick={() => dispatch(increment())}>
+                Increment
+              </Button>
+              <Button variant="outline" onClick={() => dispatch(reset())}>
+                Reset
+              </Button>
+            </div>
+
+            <div className="space-y-2 text-sm">
+              <p className="font-medium">RTK Query Test Products</p>
+              {isLoading && <p className="text-muted-foreground">Loading products...</p>}
+              {isError && (
+                <div className="flex items-center gap-2">
+                  <p className="text-destructive">Failed to fetch products.</p>
+                  <Button variant="outline" size="sm" onClick={() => void refetch()}>
+                    Retry
+                  </Button>
+                </div>
+              )}
+              {!isLoading && !isError && (
+                <ul className="space-y-1 text-muted-foreground">
+                  {testProducts.map((product) => (
+                    <li key={product.id}>
+                      {product.title} - ${product.price}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
         <Card className="border-border/80 bg-card/95 shadow-sm dark:bg-card/90">
           <CardHeader>
             <div className="mb-4 flex items-center justify-between gap-3">
