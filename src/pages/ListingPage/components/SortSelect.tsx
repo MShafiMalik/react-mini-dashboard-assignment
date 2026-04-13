@@ -22,7 +22,7 @@ const sortLabelMap: Record<ListingSortBy, string> = {
 export function SortSelect({ value, onSortChange }: SortSelectProps) {
   return (
     <Select value={value} onValueChange={(nextValue) => onSortChange(nextValue as ListingSortBy)}>
-      <SelectTrigger className="w-44" aria-label="Sort products">
+      <SelectTrigger className="w-full sm:min-w-44" aria-label="Sort products">
         <SelectValue>{sortLabelMap[value]}</SelectValue>
       </SelectTrigger>
       <SelectContent align="end">

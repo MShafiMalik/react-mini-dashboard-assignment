@@ -1,28 +1,43 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ErrorAlert } from '@/pages/ListingPage/components/ErrorAlert'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ItemCard } from '@/pages/ListingPage/components/ItemCard'
 import { ListingFilters } from '@/pages/ListingPage/components/ListingFilters'
 import { ListingGridSkeleton } from '@/pages/ListingPage/components/ListingGridSkeleton'
+import { ListingPagination } from '@/pages/ListingPage/components/ListingPagination'
 import { NoProductsEmpty } from '@/pages/ListingPage/components/NoProductsEmpty'
 import { useGetProductsQuery } from '@/features/listing/listingApi'
 import {
-  filterAndSortProducts,
+  LISTING_PAGE_SIZE,
   resetListingFilters,
-  setSearchTerm,
-  setSortBy,
-} from '@/features/listing/listingSlice'
+  selectListingFilters,
+  setPage,
+} from '@/features/listing/listingFiltersSlice'
+import { filterAndSortProducts } from '@/features/listing/listingSlice'
 
 export function ListingPage() {
   const dispatch = useAppDispatch()
-  const { searchTerm, sortBy } = useAppSelector((state) => state.listing)
+  const { searchTerm, sortBy, page } = useAppSelector(selectListingFilters)
   const { data: products = [], isLoading, isError, refetch } = useGetProductsQuery()
 
   const visibleProducts = useMemo(
     () => filterAndSortProducts(products, searchTerm, sortBy),
     [products, searchTerm, sortBy]
   )
+
+  const totalPages = Math.max(1, Math.ceil(visibleProducts.length / LISTING_PAGE_SIZE))
+
+  useEffect(() => {
+    if (page > totalPages) {
+      dispatch(setPage(totalPages))
+    }
+  }, [dispatch, page, totalPages])
+
+  const paginatedProducts = useMemo(() => {
+    const start = (page - 1) * LISTING_PAGE_SIZE
+    return visibleProducts.slice(start, start + LISTING_PAGE_SIZE)
+  }, [visibleProducts, page])
 
   return (
     <div className="space-y-6">
@@ -34,15 +49,7 @@ export function ListingPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <ListingFilters
-            searchTerm={searchTerm}
-            sortBy={sortBy}
-            visibleCount={visibleProducts.length}
-            totalCount={products.length}
-            onSearchChange={(value) => dispatch(setSearchTerm(value))}
-            onSortChange={(value) => dispatch(setSortBy(value))}
-            onResetFilters={() => dispatch(resetListingFilters())}
-          />
+          <ListingFilters />
 
           {isLoading && <ListingGridSkeleton />}
 
@@ -53,11 +60,14 @@ export function ListingPage() {
           )}
 
           {!isLoading && !isError && visibleProducts.length > 0 && (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {visibleProducts.map((product) => (
-                <ItemCard key={product.id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {paginatedProducts.map((product) => (
+                  <ItemCard key={product.id} product={product} />
+                ))}
+              </div>
+              <ListingPagination totalFiltered={visibleProducts.length} />
+            </>
           )}
         </CardContent>
       </Card>

@@ -1,35 +1,4 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-
 import { ListingSortBy, type ListingProduct } from '@/features/listing/types'
-
-type ListingState = {
-  searchTerm: string
-  sortBy: ListingSortBy
-}
-
-const initialState: ListingState = {
-  searchTerm: '',
-  sortBy: ListingSortBy.NameAsc,
-}
-
-const listingSlice = createSlice({
-  name: 'listing',
-  initialState,
-  reducers: {
-    setSearchTerm: (state, action: PayloadAction<string>) => {
-      state.searchTerm = action.payload
-    },
-    setSortBy: (state, action: PayloadAction<ListingSortBy>) => {
-      state.sortBy = action.payload
-    },
-    resetListingFilters: (state) => {
-      state.searchTerm = ''
-      state.sortBy = ListingSortBy.NameAsc
-    },
-  },
-})
-
-export const { setSearchTerm, setSortBy, resetListingFilters } = listingSlice.actions
 
 export function filterAndSortProducts(
   products: ListingProduct[],
@@ -55,5 +24,3 @@ export function filterAndSortProducts(
     }
   })
 }
-
-export default listingSlice.reducer

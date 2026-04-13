@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Search } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
+
+const SEARCH_DEBOUNCE_MS = 300
 
 type SearchBarProps = {
   value: string
@@ -10,6 +12,11 @@ type SearchBarProps = {
 
 export function SearchBar({ value, onSearchChange }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(value)
+  const onSearchChangeRef = useRef(onSearchChange)
+
+  useEffect(() => {
+    onSearchChangeRef.current = onSearchChange
+  }, [onSearchChange])
 
   useEffect(() => {
     setInputValue(value)
@@ -17,11 +24,11 @@ export function SearchBar({ value, onSearchChange }: SearchBarProps) {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      onSearchChange(inputValue)
-    }, 300)
+      onSearchChangeRef.current(inputValue)
+    }, SEARCH_DEBOUNCE_MS)
 
     return () => window.clearTimeout(timer)
-  }, [inputValue, onSearchChange])
+  }, [inputValue])
 
   return (
     <div className="relative">
