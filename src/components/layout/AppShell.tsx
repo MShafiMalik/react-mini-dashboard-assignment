@@ -32,7 +32,7 @@ export function AppShell() {
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    'rounded-md px-3 py-1.5 text-sm transition-colors',
+                    'inline-flex h-8 min-w-24 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors sm:min-w-28',
                     isActive
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground'
